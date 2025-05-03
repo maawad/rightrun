@@ -3,7 +3,7 @@
   "displayName": "RightRun",
   "description": "Add powerful file permission and execution actions to VS Code",
   "version": "0.0.1",
-  "publisher": "maawad",
+  "publisher": "TinkerCode",
   "private": true,
   "engines": {
     "vscode": "^1.96.0",
