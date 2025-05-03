@@ -1,30 +1,38 @@
 # RightRun
 
-A VSCode/Cursor extension that enriches explorer view context menu with execution actions and other utilities.
+<p align="center">
+  <img src="resources/icon.png" alt="RightRun Icon" width="128" />
+</p>
 
-## Features
+**RightRun** is a lightweight VS Code and Cursor extension that adds powerful file actions to your right-click menu — making your workflow faster and more intuitive.
 
-- Make files executable with a right click
-- Duplicate directory or files
-- More to come!
+## 🚀 Features
 
-## Requirements
+- ✅ One-click: Make any file executable (chmod +x)
+- 📁 Quickly duplicate files or directories
+- 🔧 More actions coming soon!
 
-- VSCode or Cursor
-- Node.js (for development)
+## 📦 Requirements
 
-## Extension Settings
+- [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.so/)
+- [Node.js](https://nodejs.org/) (for extension development and contribution)
 
-This extension contributes the following commands:
-1.
+## ⚙️ Extension Commands
 
-## Known Issues
+This extension contributes the following context menu commands:
 
-None at the moment.
+1. **Duplicate** – Duplicate a file or folder.
+2. **Enable Execute** – Make a file executable (`chmod +x`).
+3. **Disable Execute** – Remove executable permission (`chmod -x`).
 
-## Release Notes
+## 🐞 Known Issues
 
-### 0.0.1
+- None currently reported. Please open an issue if you find any bugs!
 
-Initial release with basic functionality
+## 📘 Release Notes
 
+### v0.0.1
+
+- Initial release with:
+  - Make executable (right-click)
+  - Duplicate files/folders
