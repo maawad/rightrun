@@ -28,6 +28,10 @@
       {
         "id": "rightrun.duplicateTools",
         "label": "Duplicate"
+      },
+      {
+        "id": "rightrun.templateTools",
+        "label": "Templates"
       }
     ],
     "commands": [
@@ -55,6 +59,31 @@
         "command": "rightrun.showPermissions",
         "title": "Show",
         "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createShellTemplate",
+        "title": "Shell",
+        "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createPythonTemplate",
+        "title": "Python",
+        "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createHIPTemplate",
+        "title": "HIP",
+        "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createMakefileTemplate",
+        "title": "Makefile",
+        "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createCMakeListsTemplate",
+        "title": "CMakeLists",
+        "category": "RightRun"
       }
     ],
     "menus": {
@@ -65,6 +94,10 @@
         },
         {
           "submenu": "rightrun.duplicateTools",
+          "group": "zzz"
+        },
+        {
+          "submenu": "rightrun.templateTools",
           "group": "zzz"
         }
       ],
@@ -96,7 +129,64 @@
           "when": "isFileSystemResource",
           "group": "2_duplicate"
         }
+      ],
+      "rightrun.templateTools": [
+        {
+          "command": "rightrun.createShellTemplate",
+          "when": "isFileSystemResource",
+          "group": "3_template"
+        },
+        {
+          "command": "rightrun.createPythonTemplate",
+          "when": "isFileSystemResource",
+          "group": "3_template"
+        },
+        {
+          "command": "rightrun.createHIPTemplate",
+          "when": "isFileSystemResource",
+          "group": "3_template"
+        },
+        {
+          "command": "rightrun.createMakefileTemplate",
+          "when": "isFileSystemResource",
+          "group": "3_template"
+        },
+        {
+          "command": "rightrun.createCMakeListsTemplate",
+          "when": "isFileSystemResource",
+          "group": "3_template"
+        }
       ]
+    },
+    "configuration": {
+      "title": "RightRun",
+      "properties": {
+        "rightrun.templateShell": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the shell script template"
+        },
+        "rightrun.templatePython": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Python script template"
+        },
+        "rightrun.templateHIP": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the HIP template"
+        },
+        "rightrun.templateMakefile": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Makefile template"
+        },
+        "rightrun.templateCMakeLists": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the CMakeLists.txt template"
+        }
+      }
     }
   },
   "scripts": {
@@ -128,5 +218,13 @@
     "type": "git",
     "url": "https://github.com/maawad/RightRun.git"
   },
-  "icon": "resources/icon.png"
+  "icon": "resources/icon.png",
+  "files": [
+    "dist",
+    "templates",
+    "resources",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ]
 }
