@@ -16,43 +16,75 @@
     "onStartupFinished",
     "onCommand:rightrun.makeExecutable",
     "onCommand:rightrun.removeExecutable",
-    "onCommand:rightrun.duplicateFile"
+    "onCommand:rightrun.showPermissions"
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "submenus": [
+      {
+        "id": "rightrun.fileTools",
+        "label": "File Tools"
+      }
+    ],
     "commands": [
       {
         "command": "rightrun.makeExecutable",
-        "title": "Enable Execute",
+        "title": "Enable Executable",
         "category": "RightRun"
       },
       {
         "command": "rightrun.removeExecutable",
-        "title": "Disable Execute",
+        "title": "Disable Executable",
         "category": "RightRun"
       },
       {
         "command": "rightrun.duplicateFile",
         "title": "Duplicate",
         "category": "RightRun"
+      },
+      {
+        "command": "rightrun.duplicateWithTimestamp",
+        "title": "Timestamped Duplicate",
+        "category": "RightRun"
+      },
+      {
+        "command": "rightrun.showPermissions",
+        "title": "Show Permissions",
+        "category": "RightRun"
       }
     ],
     "menus": {
       "explorer/context": [
         {
+          "submenu": "rightrun.fileTools",
+          "group": "zzz"
+        }
+      ],
+      "rightrun.fileTools": [
+        {
           "command": "rightrun.makeExecutable",
-          "group": "RightRun@1",
-          "when": "isFileSystemResource && !explorerResourceIsFolder"
+          "when": "isFileSystemResource && !explorerResourceIsFolder",
+          "group": "1_executable"
         },
         {
           "command": "rightrun.removeExecutable",
-          "group": "RightRun@2",
-          "when": "isFileSystemResource && !explorerResourceIsFolder"
+          "when": "isFileSystemResource && !explorerResourceIsFolder",
+          "group": "1_executable"
+        },
+        {
+          "command": "rightrun.showPermissions",
+          "when": "isFileSystemResource",
+          "group": "1_executable"
         },
         {
           "command": "rightrun.duplicateFile",
-          "group": "RightRun@3",
-          "when": "isFileSystemResource"
+          "when": "isFileSystemResource && !explorerResourceIsFolder",
+          "group": "2_other"
+        },
+        {
+          "command": "rightrun.duplicateWithTimestamp",
+          "when": "isFileSystemResource && !explorerResourceIsFolder",
+          "group": "2_other"
         }
       ]
     }

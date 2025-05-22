@@ -140,7 +140,65 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(makeExecutableDisposable, removeExecutableDisposable, duplicateFileDisposable);
+	// Register the show permissions command
+	let showPermissionsDisposable = vscode.commands.registerCommand('rightrun.showPermissions', async (resource: vscode.Uri) => {
+		try {
+			if (!resource) {
+				const activeEditor = vscode.window.activeTextEditor;
+				if (!activeEditor) {
+					vscode.window.showErrorMessage('No file selected');
+					return;
+				}
+				resource = activeEditor.document.uri;
+			}
+
+			const filePath = resource.fsPath;
+			const stats = fs.statSync(filePath);
+			const mode = stats.mode;
+			const permissionsOctal = mode.toString(8).slice(-3);
+			const permissionsHex = mode.toString(16).slice(-3);
+			outputChannel.appendLine(`File permissions for ${filePath}: Octal: ${permissionsOctal}, Hex: ${permissionsHex}`);
+			vscode.window.showInformationMessage(`File permissions: Octal: ${permissionsOctal}, Hex: ${permissionsHex}`);
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+			outputChannel.appendLine(`Error showing permissions: ${errorMessage}`);
+			vscode.window.showErrorMessage(`Failed to show permissions: ${errorMessage}`);
+		}
+	});
+
+	// Register the duplicate with timestamp command
+	let duplicateWithTimestampDisposable = vscode.commands.registerCommand('rightrun.duplicateWithTimestamp', async (resource: vscode.Uri) => {
+		try {
+			if (!resource) {
+				const activeEditor = vscode.window.activeTextEditor;
+				if (!activeEditor) {
+					vscode.window.showErrorMessage('No file selected');
+					return;
+				}
+				resource = activeEditor.document.uri;
+			}
+
+			const fsPromises = fs.promises;
+			const srcPath = resource.fsPath;
+			const parentDir = path.dirname(srcPath);
+			const baseName = path.basename(srcPath);
+			const ext = path.extname(baseName);
+			const base = path.basename(baseName, ext);
+			const date = new Date();
+			const timestamp = `${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}${date.getFullYear()}-${String(date.getHours()).padStart(2, '0')}${String(date.getMinutes()).padStart(2, '0')}${String(date.getSeconds()).padStart(2, '0')}`;
+			const newName = `${base}_${timestamp}${ext}`;
+			const destPath = path.join(parentDir, newName);
+
+			await fsPromises.copyFile(srcPath, destPath);
+			outputChannel.appendLine(`Duplicated file with timestamp: ${srcPath} -> ${destPath}`);
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+			outputChannel.appendLine(`Error duplicating file with timestamp: ${errorMessage}`);
+			vscode.window.showErrorMessage(`Failed to duplicate with timestamp: ${errorMessage}`);
+		}
+	});
+
+	context.subscriptions.push(makeExecutableDisposable, removeExecutableDisposable, duplicateFileDisposable, showPermissionsDisposable, duplicateWithTimestampDisposable);
 }
 
 // This method is called when your extension is deactivated
