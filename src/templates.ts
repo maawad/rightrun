@@ -54,12 +54,18 @@ function createTemplateFactory(readTemplate: (type: string) => Promise<string>, 
                     vscode.window.showErrorMessage('No file or directory selected');
                     return;
                 }
+
+                // Get the actual file path, following symlinks
+                const actualPath = fs.realpathSync(resource.fsPath);
+                const actualUri = vscode.Uri.file(actualPath);
+                const stats = await vscode.workspace.fs.stat(actualUri);
+
                 const template = await readTemplate(type);
                 if (!template) {
                     vscode.window.showErrorMessage(`Failed to read ${type} template`);
                     return;
                 }
-                const stats = await vscode.workspace.fs.stat(resource);
+
                 let targetPath: string;
                 if (stats.type === vscode.FileType.Directory) {
                     const fileName = type === 'cmakelists' ? 'CMakeLists.txt' :
@@ -67,9 +73,9 @@ function createTemplateFactory(readTemplate: (type: string) => Promise<string>, 
                             type === 'shell' ? 'template.sh' :
                                 type === 'python' ? 'template.py' :
                                     `template.${type}`;
-                    targetPath = vscode.Uri.joinPath(resource, fileName).fsPath;
+                    targetPath = vscode.Uri.joinPath(actualUri, fileName).fsPath;
                 } else {
-                    const dirPath = vscode.Uri.file(path.dirname(resource.fsPath));
+                    const dirPath = vscode.Uri.file(path.dirname(actualPath));
                     const fileName = type === 'cmakelists' ? 'CMakeLists.txt' :
                         type === 'makefile' ? 'Makefile' :
                             type === 'shell' ? 'template.sh' :
