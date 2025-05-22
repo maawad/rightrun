@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import { registerDuplicateTools } from './duplicateTools';
 import { registerExecTools } from './execTools';
 import { registerTemplateTools } from './templates';
+import { registerSymlinkTools } from './symlinkTools';
 import path from 'path';
 
 let outputChannel: vscode.OutputChannel;
@@ -35,6 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
 	registerExecTools(context, outputChannel);
 	registerDuplicateTools(context, outputChannel);
 	registerTemplateTools(context, outputChannel);
+	registerSymlinkTools(context, outputChannel);
 }
 
 // This method is called when your extension is deactivated

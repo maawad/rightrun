@@ -32,6 +32,10 @@
       {
         "id": "rightrun.templateTools",
         "label": "Templates"
+      },
+      {
+        "id": "rightrun.symlinkTools",
+        "label": "Symlink"
       }
     ],
     "commands": [
@@ -84,6 +88,11 @@
         "command": "rightrun.createCMakeListsTemplate",
         "title": "CMakeLists",
         "category": "RightRun"
+      },
+      {
+        "command": "rightrun.createSymlink",
+        "title": "Create",
+        "category": "RightRun"
       }
     ],
     "menus": {
@@ -98,6 +107,10 @@
         },
         {
           "submenu": "rightrun.templateTools",
+          "group": "zzz"
+        },
+        {
+          "submenu": "rightrun.symlinkTools",
           "group": "zzz"
         }
       ],
@@ -155,6 +168,13 @@
           "command": "rightrun.createCMakeListsTemplate",
           "when": "isFileSystemResource",
           "group": "3_template"
+        }
+      ],
+      "rightrun.symlinkTools": [
+        {
+          "command": "rightrun.createSymlink",
+          "when": "isFileSystemResource",
+          "group": "4_symlink"
         }
       ]
     },
