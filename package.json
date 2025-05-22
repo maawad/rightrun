@@ -2,7 +2,7 @@
   "name": "rightrun",
   "displayName": "RightRun",
   "description": "Add powerful file permission and execution actions to VS Code",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "TinkerCode",
   "private": true,
   "engines": {
