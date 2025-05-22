@@ -76,7 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	// Register the duplicate file/folder command
-	let duplicateFileDisposable = vscode.commands.registerCommand('rightrun.duplicateFile', async (resource: vscode.Uri) => {
+	let duplicateFileDisposable = vscode.commands.registerCommand('rightrun.duplicate', async (resource: vscode.Uri) => {
 		try {
 			if (!resource) {
 				const activeEditor = vscode.window.activeTextEditor;
@@ -167,7 +167,7 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	// Register the duplicate with timestamp command
-	let duplicateWithTimestampDisposable = vscode.commands.registerCommand('rightrun.duplicateWithTimestamp', async (resource: vscode.Uri) => {
+	let duplicateWithTimestampDisposable = vscode.commands.registerCommand('rightrun.timestamped', async (resource: vscode.Uri) => {
 		try {
 			if (!resource) {
 				const activeEditor = vscode.window.activeTextEditor;
@@ -182,15 +182,39 @@ export function activate(context: vscode.ExtensionContext) {
 			const srcPath = resource.fsPath;
 			const parentDir = path.dirname(srcPath);
 			const baseName = path.basename(srcPath);
-			const ext = path.extname(baseName);
-			const base = path.basename(baseName, ext);
 			const date = new Date();
 			const timestamp = `${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}${date.getFullYear()}-${String(date.getHours()).padStart(2, '0')}${String(date.getMinutes()).padStart(2, '0')}${String(date.getSeconds()).padStart(2, '0')}`;
-			const newName = `${base}_${timestamp}${ext}`;
-			const destPath = path.join(parentDir, newName);
 
-			await fsPromises.copyFile(srcPath, destPath);
-			outputChannel.appendLine(`Duplicated file with timestamp: ${srcPath} -> ${destPath}`);
+			let newName: string;
+			if (fs.lstatSync(srcPath).isDirectory()) {
+				// Folder
+				newName = `${baseName}_${timestamp}`;
+				const destPath = path.join(parentDir, newName);
+				// Recursively copy folder
+				const copyDir = async (src: string, dest: string) => {
+					await fsPromises.mkdir(dest, { recursive: true });
+					const entries = await fsPromises.readdir(src, { withFileTypes: true });
+					for (const entry of entries) {
+						const srcEntry = path.join(src, entry.name);
+						const destEntry = path.join(dest, entry.name);
+						if (entry.isDirectory()) {
+							await copyDir(srcEntry, destEntry);
+						} else {
+							await fsPromises.copyFile(srcEntry, destEntry);
+						}
+					}
+				};
+				await copyDir(srcPath, destPath);
+				outputChannel.appendLine(`Duplicated folder with timestamp: ${srcPath} -> ${destPath}`);
+			} else {
+				// File
+				const ext = path.extname(baseName);
+				const base = path.basename(baseName, ext);
+				newName = `${base}_${timestamp}${ext}`;
+				const destPath = path.join(parentDir, newName);
+				await fsPromises.copyFile(srcPath, destPath);
+				outputChannel.appendLine(`Duplicated file with timestamp: ${srcPath} -> ${destPath}`);
+			}
 		} catch (error) {
 			const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 			outputChannel.appendLine(`Error duplicating file with timestamp: ${errorMessage}`);
