@@ -4,6 +4,15 @@
   <img src="resources/icon.png" alt="RightRun Icon" width="128" />
 </p>
 
+<p align="center">
+  <a href="https://open-vsx.org/extension/TinkerCode/rightrun">
+    <img src="https://img.shields.io/badge/Open%20VSX-Download-blue?logo=visual-studio-code" alt="Open VSX" />
+  </a>
+  <a href="https://github.com/maawad/RightRun">
+    <img src="https://img.shields.io/github/v/release/maawad/RightRun?logo=github" alt="GitHub Release" />
+  </a>
+</p>
+
 **RightRun** is a lightweight VS Code and Cursor extension that adds powerful file actions to your right-click menu — making your workflow faster and more intuitive.
 
 ## 🚀 Features
