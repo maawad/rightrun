@@ -1,19 +1,43 @@
-# RightRun
+<h1 align="center">🏃 RightRun 🏃</h1>
 
 <p align="center">
-  <img src="resources/icon.png" alt="RightRun Icon" width="128" />
-</p>
-
-<p align="center">
+  <a href="https://github.com/maawad/rightrun/actions/workflows/main.yml">
+    <img src="https://github.com/maawad/rightrun/actions/workflows/main.yml/badge.svg" alt="CI Status">
+  </a>
+  <a href="https://github.com/maawad/rightrun/actions/workflows/main.yml">
+    <img src="https://img.shields.io/badge/Download-Latest%20VSIX-blue?style=flat-square" alt="Download VSIX">
+  </a>
   <a href="https://open-vsx.org/extension/TinkerCode/rightrun">
-    <img src="https://img.shields.io/badge/Open%20VSX-Download-blue?logo=visual-studio-code" alt="Open VSX" />
-  </a>
-  <a href="https://github.com/maawad/RightRun">
-    <img src="https://img.shields.io/github/v/release/maawad/RightRun?logo=github" alt="GitHub Release" />
+    <img src="https://img.shields.io/open-vsx/v/TinkerCode/rightrun?label=Open%20VSX&style=flat-square" alt="Open VSX">
   </a>
 </p>
 
-**RightRun** is a lightweight VS Code and Cursor extension that adds powerful file actions to your right-click menu — making your workflow faster and more intuitive.
+<p align="center">
+  <img src="resources/icon.png" alt="RightRun Icon" width="128" height="128">
+</p>
+
+<p align="center">
+  <strong>Add powerful file permission and execution actions to VS Code — making your workflow faster and more intuitive.</strong>
+</p>
+
+## 📦 Installation
+
+### Download Latest Version
+
+[![Download VSIX](https://img.shields.io/badge/Download-Latest%20VSIX-blue?style=for-the-badge)](https://github.com/maawad/rightrun/actions/workflows/main.yml)
+
+1. Go to [Actions](https://github.com/maawad/rightrun/actions)
+2. Click on the latest successful workflow run
+3. Scroll to "Artifacts" and download `rightrun-vsix`
+4. Extract the `.vsix` file from the zip
+5. In VS Code: `Extensions` → `...` → `Install from VSIX`
+6. Select the downloaded `.vsix` file
+
+### From Open VSX
+
+[![Open VSX Version](https://img.shields.io/open-vsx/v/TinkerCode/rightrun?label=Open%20VSX&style=for-the-badge)](https://open-vsx.org/extension/TinkerCode/rightrun)
+
+Visit [Open VSX](https://open-vsx.org/extension/TinkerCode/rightrun) to download the `.vsix` file.
 
 ## 🚀 Features
 
@@ -35,11 +59,6 @@
   - Makefiles
   - CMakeLists.txt
 - ⚙️ Customize template paths in settings
-
-## 📦 Requirements
-
-- [VS Code](https://code.visualstudio.com/) or [Cursor](https://www.cursor.so/)
-- [Node.js](https://nodejs.org/) (for extension development and contribution)
 
 ## ⚙️ Extension Commands
 
