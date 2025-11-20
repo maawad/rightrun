@@ -16,18 +16,20 @@ function readTemplateFactory(outputChannel: vscode.OutputChannel) {
         if (!key) {
             throw new Error(`Unknown template type: ${templateName}`);
         }
-        const templatePath = config.get<string>(key);
+        let templatePath = config.get<string>(key);
+        // Fallback to default templates if not configured
         if (!templatePath) {
-            if (typeof outputChannel !== 'undefined') {
-                outputChannel.appendLine(`[RightRun] Template config dump: ${JSON.stringify({
-                    shell: config.get('templateShell'),
-                    python: config.get('templatePython'),
-                    hip: config.get('templateHIP'),
-                    makefile: config.get('templateMakefile'),
-                    cmakelists: config.get('templateCMakeLists')
-                }, null, 2)}`);
+            const defaultTemplates: { [key: string]: string } = {
+                shell: 'templates/template.sh',
+                python: 'templates/template.py',
+                hip: 'templates/template.hip',
+                makefile: 'templates/template.Makefile',
+                cmakelists: 'templates/template.CMakeLists.txt'
+            };
+            templatePath = defaultTemplates[templateName];
+            if (!templatePath) {
+                throw new Error(`Unknown template type: ${templateName}`);
             }
-            throw new Error(`Template ${templateName} not found in configuration`);
         }
         let fullPath: string;
         if (path.isAbsolute(templatePath)) {

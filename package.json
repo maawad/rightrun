@@ -183,27 +183,27 @@
       "properties": {
         "rightrun.templateShell": {
           "type": "string",
-          "default": "",
+          "default": "templates/template.sh",
           "description": "Path to the shell script template"
         },
         "rightrun.templatePython": {
           "type": "string",
-          "default": "",
+          "default": "templates/template.py",
           "description": "Path to the Python script template"
         },
         "rightrun.templateHIP": {
           "type": "string",
-          "default": "",
+          "default": "templates/template.hip",
           "description": "Path to the HIP template"
         },
         "rightrun.templateMakefile": {
           "type": "string",
-          "default": "",
+          "default": "templates/template.Makefile",
           "description": "Path to the Makefile template"
         },
         "rightrun.templateCMakeLists": {
           "type": "string",
-          "default": "",
+          "default": "templates/template.CMakeLists.txt",
           "description": "Path to the CMakeLists.txt template"
         }
       }
