@@ -8,10 +8,11 @@ on:
         required: true
         type: choice
         options:
+          - none
           - patch
           - minor
           - major
-        default: 'patch'
+        default: 'none'
 
 permissions:
   contents: write
@@ -45,20 +46,27 @@ jobs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-        # Bump version based on input
-        npm version ${{ inputs.bump }} --no-git-tag-version
+        # Bump version based on input (skip if 'none')
+        if [ "${{ inputs.bump }}" != "none" ]; then
+          npm version ${{ inputs.bump }} --no-git-tag-version
+          echo "Bumped version to $(node -p "require('./package.json').version")"
+        else
+          echo "Skipping version bump (using current version)"
+        fi
 
         NEW_VERSION=$(node -p "require('./package.json').version")
         echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-        echo "Bumped version to $NEW_VERSION"
+        echo "Release version: $NEW_VERSION"
 
     - name: Commit version bump
+      if: inputs.bump != 'none'
       run: |
         git add package.json
         git commit -m "Bump version to ${{ env.NEW_VERSION }} [publish]"
         git tag -a "v${{ env.NEW_VERSION }}" -m "Release v${{ env.NEW_VERSION }}"
 
     - name: Push changes
+      if: inputs.bump != 'none'
       run: |
         git push origin main
         git push origin "v${{ env.NEW_VERSION }}"
